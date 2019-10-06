@@ -29,5 +29,5 @@ func CalcCapital(rate float64, periods int) float64 {
 	}
 
 	powRate := math.Pow((rate + 1), float64(periods))
-	return float64(periods) / ((rate * powRate) / (powRate - 1))
+	return (powRate - 1) / (rate * powRate)
 }
