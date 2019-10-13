@@ -7,6 +7,47 @@ import "./rates"
 
 func main() {
 	monthlyRate := rates.AnnualToMonthlyRate(0.01)
+	monthlyInsuranceRate := 0.0036 / 12.0
+
+	capital := rates.CalcNetCapital(monthlyRate, monthlyInsuranceRate, 0.0, 15*12) * 1400.0
+
+	fmt.Printf("Capital %f\n", capital)
+
+	/*scenario := ConstantScenario{
+		interrestRate:    0.008,
+		priceGrowthRate:  0.02,
+		rent:             1000,
+		marketReturnRate: 0.01,
+	}
+
+	simulations.PrintPlayScenario(200000.0, scenario)*/
+}
+
+type ConstantScenario struct {
+	interrestRate    float64
+	priceGrowthRate  float64
+	rent             float64
+	marketReturnRate float64
+}
+
+func (c ConstantScenario) InterrestRate(period int) float64 {
+	return c.interrestRate
+}
+
+func (c ConstantScenario) Price(period int) float64 {
+	return math.Pow((1.0 + c.priceGrowthRate), float64(period))
+}
+
+func (c ConstantScenario) Rent(period int) float64 {
+	return c.rent
+}
+
+func (c ConstantScenario) MarketReturnRate(period int) float64 {
+	return c.marketReturnRate
+}
+
+func main1() {
+	monthlyRate := rates.AnnualToMonthlyRate(0.01)
 
 	capital := rates.CalcCapital(monthlyRate, 15*12)
 

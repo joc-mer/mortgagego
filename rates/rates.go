@@ -31,3 +31,9 @@ func CalcCapital(rate float64, periods int) float64 {
 	powRate := math.Pow((rate + 1), float64(periods))
 	return (powRate - 1) / (rate * powRate)
 }
+
+func CalcNetCapital(rate float64, insuranceRate float64, taxeRate float64, periods int) float64 {
+	return (CalcCapital(rate, periods) - float64(periods)*insuranceRate) * (1.0 - taxeRate)
+}
+
+struct 
